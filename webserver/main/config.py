@@ -41,7 +41,6 @@ class Config:
         "IGM_CLIENT_ENDPOINT", "http://seller-app-igm:8000/api")
     BG_DEFAULT_URL = os.getenv("BG_DEFAULT_URL", "https://pilot-gateway-1.beckn.nsdl.co.in/")
     BG_DEFAULT_URL_FLAG = os.getenv("BG_DEFAULT_URL_FLAG", "True") == "True"
-    LOGISTICS_ON_SEARCH_WAIT = int(os.getenv("LOGISTICS_ON_SEARCH_WAIT", "3"))
     PG_HOST = os.getenv('PG_HOST', 'localhost')
     PG_PORT = os.getenv('PG_PORT', '5432')
     PG_DATABASE = os.getenv('PG_DATABASE', 'practice')

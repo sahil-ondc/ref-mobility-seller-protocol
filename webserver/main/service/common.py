@@ -64,20 +64,3 @@ def get_network_request_payloads(**kwargs):
                 OndcDomain(domain), OndcAction(action), m))
         response[k] = ondc_requests
     return response
-
-
-@check_for_exception
-def send_logistics_on_call_count_to_client(message, request_type="on_search"):
-    log(f"logistics {request_type} payload: {message}")
-    on_call_message_id = message['message_ids'][request_type]
-    on_call_requests = get_ondc_requests(
-        OndcDomain.LOGISTICS, OndcAction(request_type), on_call_message_id)
-    on_call_requests_count = len(on_call_requests)
-    on_call_transaction_id = on_call_requests[0]['context'][
-        'transaction_id'] if on_call_requests_count > 0 else None
-    post_count_response_to_client(request_type,
-                                  {
-                                      "messageId": on_call_message_id,
-                                      "transactionId": on_call_transaction_id,
-                                      "count": on_call_requests_count,
-                                  })

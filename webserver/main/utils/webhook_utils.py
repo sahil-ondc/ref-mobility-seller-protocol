@@ -35,10 +35,7 @@ def lookup_call(url, payload, headers=None):
 
 
 def post_count_response_to_client(route, payload):
-    if "issue" in route:
-        client_webhook_endpoint = get_config_by_name('IGM_CLIENT_ENDPOINT')
-    else:
-        client_webhook_endpoint = get_config_by_name('BPP_CLIENT_ENDPOINT')
+    client_webhook_endpoint = get_config_by_name('BPP_CLIENT_ENDPOINT')
     try:
         status_code = requests_post_with_retries(f"{client_webhook_endpoint}/logistics/{route}", payload=payload)
     except requests.exceptions.HTTPError:

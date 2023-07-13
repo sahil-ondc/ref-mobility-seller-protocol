@@ -36,7 +36,6 @@ class OndcAction(enum.Enum):
 
 class OndcDomain(enum.Enum):
     RETAIL = "retail"
-    LOGISTICS = "logistics"
 
 
 class OndcRequest(dbBase):

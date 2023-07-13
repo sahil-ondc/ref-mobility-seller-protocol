@@ -7,10 +7,6 @@ from main.utils.decorators import check_for_exception
 from main.utils.webhook_utils import post_on_bg_or_bap
 
 
-def make_logistics_track_request(payload):
-    bpp_endpoint = payload['context']['bpp_uri']
-    status_code = make_request_over_ondc_network(payload, bpp_endpoint, payload['context']['action'])
-    log(f"Sent request to logistics-bg with status-code {status_code}")
 
 
 def make_retail_track_payload_request_to_client(track_payload):
@@ -25,14 +21,6 @@ def send_track_payload_to_client(message):
     resp, return_code = make_retail_track_payload_request_to_client(track_payload)
     log(f"Got response {resp} from client with status-code {return_code}")
 
-
-@check_for_exception
-def make_logistics_track(message):
-    log(f"logistics track payload: {message}")
-    track_message_id = message['message_ids']['track']
-    track_payload = get_first_ondc_request(OndcDomain.LOGISTICS, OndcAction('track'), track_message_id)
-    track_payload['context']['bap_uri'] = f"{track_payload['context']['bap_uri']}/protocol/logistics/v1"
-    make_logistics_track_request(track_payload)
 
 
 @check_for_exception

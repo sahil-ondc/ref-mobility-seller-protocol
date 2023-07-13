@@ -8,14 +8,6 @@ from main.utils.lookup_utils import fetch_gateway_url_from_lookup
 from main.utils.webhook_utils import post_on_bg_or_bap
 
 
-def make_logistics_search_request(payload):
-    gateway_or_bap_endpoint = fetch_gateway_url_from_lookup()
-    status_code = make_request_over_ondc_network(payload, gateway_or_bap_endpoint, payload['context']['action'])
-    log(f"Sent request to logistics-bg with status-code {status_code}")
-
-
-def make_logistics_search_payload_request_to_client(select_payload):
-    return get_responses_from_client("logistics/search-payload-for-retail-select", select_payload)
 
 
 def make_retail_select_payload_request_to_client(select_payload):
@@ -30,14 +22,6 @@ def send_select_payload_to_client(message):
     resp, return_code = make_retail_select_payload_request_to_client(select_payload)
     log(f"Got response {resp} from client with status-code {return_code}")
 
-
-@check_for_exception
-def make_logistics_search(message):
-    log(f"logistics search payload: {message}")
-    search_message_id = message['message_ids']['search']
-    search_payload = get_first_ondc_request(OndcDomain.LOGISTICS, OndcAction('search'), search_message_id)
-    search_payload['context']['bap_uri'] = f"{search_payload['context']['bap_uri']}/protocol/logistics/v1"
-    make_logistics_search_request(search_payload)
 
 
 @check_for_exception
